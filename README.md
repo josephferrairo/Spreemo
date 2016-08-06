@@ -26,3 +26,4 @@ Be sure to include adequate tests for all the functionality you add.
 
 Sample doctor and patient records have been provided to ease development. Run
 `rake db:setup` to initialize them.
+# Spreemo
