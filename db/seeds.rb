@@ -13,3 +13,9 @@ end
 10.times do
   FactoryGirl.create :patient
 end
+
+Category.create!([
+  {specialty: 'Orthopedist', ailment: 'Broken Bones'},
+  {specialty: 'Cardiologist', ailment: 'Heart Disease'},
+  {specialty: 'Opthamologist', ailment: 'Eye Trouble'}
+  ])

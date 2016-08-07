@@ -1,0 +1,11 @@
+<%= form_for(@category) do |f| %>
+<div class="field">
+<%= f.label :ailment %><br />
+<%= f.text_field :ailment %>
+</div>
+<div class="field">
+<%= f.label :specialty %><br />
+<%= f.text_field :specialty %>
+</div>
+<%= f.submit %>
+<% end %>
