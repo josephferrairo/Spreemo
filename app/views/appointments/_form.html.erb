@@ -1,12 +1,24 @@
 <%= form_for([@patient, @appointment]) do |f| %>
 
+<% if @appointment.errors.any? %>
+<div id="error_explanation">
+  <h2><%= pluralize(@appointment.errors.count, "error") %> prohibited this appointment from being saved:</h2>
+
+  <ul>
+    <% @appointment.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+    <% end %>
+  </ul>
+</div>
+<% end %>
+
 <div class="field">
   <%= f.label :start_date %>
-  <%= f.date_select :start_date %>
+  <%= f.date_select :start_date, default: 3.days.from_now %>
 </div>
 <div class="field">
   <%= f.label :start_time %>
-  <%= f.time_select :start_time %>
+  <%= f.time_select :start_time, include_blank: true %>
 </div>
 <div class="field">
   <%= f.label :doctor_id %>
