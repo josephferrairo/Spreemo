@@ -5,11 +5,11 @@
 </h1>
 
 <%= render partial: "shared/show_person", locals: { person: @patient} %>
-
+<% if @patient.category.present? %>
 <p>
   <strong>Ailment:</strong>
   <%= @patient.category.ailment %>
 </p>
-
+<% end %>
 <%= link_to 'Edit', edit_patient_path(@patient) %> |
 <%= link_to 'Back', patients_path %>

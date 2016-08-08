@@ -4,6 +4,7 @@ class Doctor < ActiveRecord::Base
   def name
     "Dr. #{super}"
   end
-  
+
   belongs_to :category
+  has_many :appointments
 end
