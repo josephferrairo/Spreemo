@@ -10,8 +10,8 @@
 </div>
 <div class="field">
   <%= f.label :doctor_id %>
-  <%= f.collection_select :id, Doctor.where(category_id: @patient.category_id), :id, :name %>
+  <%= f.collection_select :doctor_id, Doctor.all.where(category_id: @patient.category_id), :id, :name %>
 </div>
-
+<%= f.submit %>
 
 <% end %>
