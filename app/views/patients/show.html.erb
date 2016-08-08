@@ -11,5 +11,22 @@
   <%= @patient.category.ailment %>
 </p>
 <% end %>
-<%= link_to 'Edit', edit_patient_path(@patient) %> |
+<%= link_to 'Edit', edit_patient_path(@patient) %>
 <%= link_to 'Back', patients_path %>
+
+<h3>Appointments</h3>
+
+<table class="table">
+  <tr class="default">
+    <th><b>Doctor</b></th>
+    <th><b>Date</b></th>
+    <th><b>Time</b></th>=
+  </tr>
+  <% @patient.appointments.each do |appointment| %>
+  <tr class="default">
+    <td><%= appointment.doctor.name %></td>
+    <td><%= appointment.start_date %></td>
+    <td><%= appointment.start_time %></td>
+  </tr>
+<% end %>
+</table>

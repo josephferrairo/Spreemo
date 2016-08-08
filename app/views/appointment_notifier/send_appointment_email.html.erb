@@ -1,0 +1,12 @@
+<h1>A New appointment has been booked for <%= @patient.name %></h1>
+<table>
+  <tr>
+    <td><b>Doctor: </b><%= @doctor.name %></td><br />
+    <td><b> Address: </b><%= @doctor.street %>, <%= @doctor.city %>, <%= @doctor.state %>, <%= @doctor.zip %> </td><br />
+</table>
+<br />
+<table>
+    <td><b> Date: </b><%= @appointment.start_date %></td>
+    <td><b> Time: </b><%= @appointment.start_time %></td>
+  </tr>
+</table>
