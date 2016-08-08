@@ -1,11 +1,23 @@
 <%= form_for(@category) do |f| %>
+<% if @category.errors.any? %>
+<div id="error_explanation">
+  <h2><%= pluralize(@category.errors.count, "error") %> prohibited this doctor from being saved:</h2>
+
+  <ul>
+    <% @category.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+    <% end %>
+  </ul>
+</div>
+<% end %>
+
 <div class="field">
-<%= f.label :ailment %><br />
-<%= f.text_field :ailment %>
+  <%= f.label :ailment %><br />
+  <%= f.text_field :ailment %>
 </div>
 <div class="field">
-<%= f.label :specialty %><br />
-<%= f.text_field :specialty %>
+  <%= f.label :specialty %><br />
+  <%= f.text_field :specialty %>
 </div>
 <%= f.submit %>
 <% end %>
