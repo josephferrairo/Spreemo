@@ -24,6 +24,7 @@ RSpec.describe AppointmentsController, type: :controller do
         post :create, :patient_id => @patient,
         appointment: FactoryGirl.attributes_for(:appointment)
         expect(Appointment.count).to eq(1)
+        ActionMailer::Base.deliveries.count.should == 1
       end
     end
   end
