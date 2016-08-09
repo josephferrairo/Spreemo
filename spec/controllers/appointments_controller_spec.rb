@@ -1,12 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe AppointmentsController, type: :controller do
+  before(:each) do
+    @patient = FactoryGirl.create(:patient)
+    @doctor = FactoryGirl.create(:doctor)
+    @appointment = FactoryGirl.create(:appointment, patient: @patient)
+    @appointment_attributes = FactoryGirl.attributes_for(:appointment)
+  end
 
   describe "Get #new" do
-    before(:each) do
-      @patient = FactoryGirl.create(:patient)
-    end
-
     it "returns a successful http request status code" do
       get :new, :patient_id => @patient
       expect(response).to have_http_status(:success)
@@ -14,32 +16,22 @@ RSpec.describe AppointmentsController, type: :controller do
   end
 
   describe "POST #create" do
-    before(:each) do
-      @patient = FactoryGirl.create(:patient)
-      @doctor = FactoryGirl.create(:doctor)
-    end
 
     context "a successful create " do
       it "saves a new appointment" do
-        post :create, :patient_id => @patient,
-        appointment: FactoryGirl.attributes_for(:appointment)
-        expect(Appointment.count).to eq(1)
+        expect { post :create, :patient_id => @patient,
+        appointment: @appointment_attributes }.to change(
+        Appointment, :count).by(1)
         ActionMailer::Base.deliveries.count.should == 1
       end
     end
   end
+
   describe '#DELETE destroy' do
-    before(:each) do
-      @patient = FactoryGirl.create(:patient)
-      @appointment = FactoryGirl.create(:appointment, patient: @patient)
-    end
-    it "destroys the requested cardio_exercise" do
+    it "destroys the requested appointment" do
       expect { delete :destroy, { :patient_id => @patient, :id => @appointment.id }
-      }.to change(Appointment, :count).by(-1)
-      end
+    }.to change(Appointment, :count).by(-1)
+  end
 end
-
-
-
 
 end
