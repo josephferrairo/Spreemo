@@ -11,12 +11,23 @@ class AppointmentsController < ApplicationController
 
     respond_to do |format|
       if @appointment.save
-        format.html { redirect_to @patient, notice: 'Patient was successfully created.' }
+        AppointmentNotifier.send_appointment_email(@appointment).deliver
+        format.html { redirect_to @patient, notice: 'Appointment was successfully created.' }
         format.json { render :show, status: :created, location: @appointment }
       else
         format.html { render :new }
         format.json { render json: @appointment.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  def destroy
+    @patient = Patient.find(params[:patient_id])
+    @appointment = @patient.appointments.find(params[:id])
+    @appointment.destroy
+    respond_to do |format|
+      format.html { redirect_to @patient, notice: 'Appointment was successfully destroyed.' }
+      format.json { head :no_content }
     end
   end
 

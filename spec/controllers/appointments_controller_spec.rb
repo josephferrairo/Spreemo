@@ -28,4 +28,18 @@ RSpec.describe AppointmentsController, type: :controller do
       end
     end
   end
+  describe '#DELETE destroy' do
+    before(:each) do
+      @patient = FactoryGirl.create(:patient)
+      @appointment = FactoryGirl.create(:appointment, patient: @patient)
+    end
+    it "destroys the requested cardio_exercise" do
+      expect { delete :destroy, { :patient_id => @patient, :id => @appointment.id }
+      }.to change(Appointment, :count).by(-1)
+      end
+end
+
+
+
+
 end
