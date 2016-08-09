@@ -1,12 +1,12 @@
 class AppointmentsController < ApplicationController
+  before_action :set_appt, only: [:new, :create]
+  before_action :set_appt_eud, only: [:edit, :update, :destroy]
 
   def new
-    @patient = Patient.find(params[:patient_id])
     @appointment = Appointment.new
   end
 
   def create
-    @patient = Patient.find(params[:patient_id])
     @appointment = @patient.appointments.create(appointment_params)
 
     respond_to do |format|
@@ -22,13 +22,9 @@ class AppointmentsController < ApplicationController
   end
 
   def edit
-    @patient = Patient.find(params[:patient_id])
-    @appointment = @patient.appointments.find(params[:id])
   end
 
   def update
-    @patient = Patient.find(params[:patient_id])
-    @appointment = @patient.appointments.find(params[:id])
     respond_to do |format|
       if @appointment.update_attributes(appointment_params)
         AppointmentNotifier.send_appointment_email(@appointment).deliver
@@ -42,8 +38,6 @@ class AppointmentsController < ApplicationController
   end
 
   def destroy
-    @patient = Patient.find(params[:patient_id])
-    @appointment = @patient.appointments.find(params[:id])
     @appointment.destroy
     respond_to do |format|
       format.html { redirect_to @patient, notice: 'Appointment was successfully destroyed.' }
@@ -55,4 +49,15 @@ class AppointmentsController < ApplicationController
   def appointment_params
     params.require(:appointment).permit(:start_date, :start_time, :doctor_id)
   end
+
+  def set_appt
+    @patient = Patient.find(params[:patient_id])
+  end
+
+  def set_appt_eud
+    @patient = Patient.find(params[:patient_id])
+    @appointment = @patient.appointments.find(params[:id])
+  end
+
+
 end
