@@ -21,6 +21,26 @@ class AppointmentsController < ApplicationController
     end
   end
 
+  def edit
+    @patient = Patient.find(params[:patient_id])
+    @appointment = @patient.appointments.find(params[:id])
+  end
+
+  def update
+    @patient = Patient.find(params[:patient_id])
+    @appointment = @patient.appointments.find(params[:id])
+    respond_to do |format|
+      if @appointment.update_attributes(appointment_params)
+        AppointmentNotifier.send_appointment_email(@appointment).deliver
+        format.html { redirect_to @patient, notice: 'Appointment was successfully updated.' }
+        format.json { render :show, status: :created, location: @appointment }
+      else
+        format.html { render :new }
+        format.json { render json: @appointment.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   def destroy
     @patient = Patient.find(params[:patient_id])
     @appointment = @patient.appointments.find(params[:id])
